@@ -1,0 +1,55 @@
+<header class="navbar navbar-expand-lg navbar-light bg-crema">
+    <div class="container-fluid">
+        <div class="navbar-brand d-flex flex-column align-items-center">
+            <a class="navbar-brand" href="/">
+                <img class="logo" src="/img/logo2.png" alt="Artesania Local Logo">
+            </a>
+        </div>
+        <form class="d-flex ms-5">
+            <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
+            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+        </form>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto me-5">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Categorías </a>
+                    <ul class="dropdown-menu bg-crema" aria-labelledby="navbarDropdown">
+                        <% if (user && user.rol === 'administrador') { %>
+                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/accesorios">Accesorios</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/bolsos">Bolsos</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/sombreros">Sombreros</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/blusas">Blusas</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/peluches">Peluches</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/llaveros">Llaveros</a></li>
+                        <% } else { %>
+                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/accesorios">Accesorios</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/bolsos">Bolsos</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/sombreros">Sombreros</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/blusas">Blusas</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/peluches">Peluches</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/llaveros">Llaveros</a></li>
+                        <% } %>
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="/tienda">Tienda</a></li>
+                <li class="nav-item"><a class="nav-link" href="/nosotros">Nosotros</a></li>
+                <li class="nav-item"><a class="nav-link" href="/ayuda">Ayuda</a></li>
+                <% if (user) { %>
+                    <li class="nav-item"><a class="nav-link" href="/compras">Mis compras</a></li>
+                    <% if (user.rol === 'administrador') { %>
+                        <li class="nav-item"><a class="nav-link" href="/usuarios/usuariosExistentes">Usuarios</a></li>
+                    <% } %>
+                    <li class="nav-item"><a class="nav-link" href="/usuarios/logout">Cerrar Sesión</a></li>
+                <% } else { %>
+                    <li class="nav-item"><a class="nav-link" href="/registro">Crea tu cuenta</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/usuarios/loggin">Ingresa</a></li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</header>

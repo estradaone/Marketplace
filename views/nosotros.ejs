@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <!-- Incluir la navegacion -->
+    <%- include partials/navbar.ejs %>
+
+    <!-- Sección Nosotros -->
+    <section class="container mt-5">
+        <div class="text-center">
+            <h3 class="mb-3">Sobre Nosotros</h3>
+            <p>Aquí va una breve descripción sobre la empresa y su historia. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="/img/logo.jpg" class="card-img-top" alt="Misión">
+                    <div class="card-body">
+                        <h5 class="card-title">Misión</h5>
+                        <p class="card-text">Proporcionar una plataforma digital inclusiva y sergura que permita a los artesanos locales comercializar 
+                            sus productos de manera justa, protegida, fomentando el respeto por la propiedad intelectual, la cultuta y las tradiciones artesanales.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="/img/logo.jpg" class="card-img-top" alt="Visión">
+                    <div class="card-body">
+                        <h5 class="card-title">Visión</h5>
+                        <p class="card-text">Convertirse en el líder en la promoción y venta de artesanias locales,
+                            reconocida por su compromiso con la equidad, la sostenibilidad y la protección de los derechos
+                            de los artesanos, contribuyendo el desarrollo cultural y económico de las comunidades artesanales.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="/img/logo.jpg" class="card-img-top" alt="Valores">
+                    <div class="card-body">
+                        <h5 class="card-title">Valores</h5>
+                        <p class="card-text"><b>Respeto: </b> Se valora la riqueza cultural y la creatividad única de cada artesano,
+                            destacando su auntenticidad como el núcleo de nuestras tradiciones</p> <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Incluir el footer -->
+    <%- include partials/footer.ejs %>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
