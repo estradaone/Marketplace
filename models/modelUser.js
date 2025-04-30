@@ -14,7 +14,7 @@ const UserModel = {
     async authenticateUser(email, password = null) {
         const query = 'SELECT * FROM usuarios WHERE email = ?';
         const [rows] = await pool.query(query, [email]);
-    
+
         if (rows.length > 0) {
             const user = rows[0];
             if (password) { // Solo comparar contraseñas si se proporciona
@@ -52,7 +52,57 @@ const UserModel = {
     async updatePassword(id, newPassword) {
         const query = 'UPDATE usuarios SET password = ?, reset_token = NULL, token_expiration = NULL WHERE id_usuario = ?';
         await pool.query(query, [newPassword, id]);
+    },
+
+    // -----CRUD ---------
+    //Obtener Por categoria
+    async obtenerCategorias() {
+        const query = 'SELECT id_categoria, nombre_categoria FROM categorias';
+        const [rows] = await pool.query(query);
+        return rows;
+    },
+
+    //Agregar productos
+    async agregarProducto({ nombre_producto, descripcion, precio, cantidad, imagen_url, id_categoria }) {
+        const query = `
+            INSERT INTO productos (nombre_producto, descripcion, precio, cantidad, imagen_url, id_categoria)
+            VALUES (?, ?, ?, ?, ?, ?)
+        `;
+        await pool.query(query, [nombre_producto, descripcion, precio, cantidad, imagen_url, id_categoria]);
+    },
+
+    // Obtener productos por id
+    async obtenerProductosPorId(id_producto) {
+        const query = 'SELECT * FROM productos WHERE id_producto = ?';
+        const [rows] = await pool.query(query, [id_producto]);
+        return rows[0];
+    },
+
+    // Actualizar los productos
+    async actualizarProducto(id_producto, { nombre_producto, descripcion, precio, cantidad, imagen_url, id_categoria }) {
+        let query, params;
+        if (imagen_url) {
+            query = `
+                UPDATE productos SET nombre_producto = ?, descripcion = ?, precio = ?, cantidad = ?, imagen_url = ?, id_categoria = ?
+                WHERE id_producto = ?
+            `;
+            params = [nombre_producto, descripcion, precio, cantidad, imagen_url, id_categoria, id_producto];
+        } else {
+            query = `
+                UPDATE productos SET nombre_producto = ?, descripcion = ?, precio = ?, cantidad = ?, id_categoria = ?
+                WHERE id_producto = ?
+            `;
+            params = [nombre_producto, descripcion, precio, cantidad, id_categoria, id_producto];
+        }
+        await pool.query(query, params);
+    },
+
+    // ELiminar productos
+    async eliminarProducto(id_producto) {
+        const query = 'DELETE FROM productos WHERE id_producto = ?';
+        await pool.query(query, [id_producto]);
     }
+
 };
 
 module.exports = UserModel;

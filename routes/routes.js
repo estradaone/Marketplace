@@ -37,6 +37,7 @@ router.get('/usuarios/categorias/peluches', UserController.getPeluches);
 router.get('/admin/categorias/llaveros', UserController.getLlaveros);
 router.get('/usuarios/categorias/llaveros', UserController.getLlaveros);
 
+
 // Ruta para mostrar la página de recuperación de contraseña
 router.get('/forgot-password', (req, res) => {
     res.render('forgot-password');
@@ -53,6 +54,13 @@ router.get('/reset-password/:token', (req, res) => {
 
 // Ruta para manejar el restablecimiento de contraseña
 router.post('/reset-password', UserController.resetPassword);
+
+// Rutas del CRUD de Productos ( SOLO ADMIN)
+router.get('/admin/productos/agregar', UserController.mostrarFormularioAgregar);
+router.post('/admin/productos/agregar', UserController.upload.single('imagen'), UserController.agregarProducto);
+router.get('/admin/productos/editar/:id_producto', UserController.obtenerProductos);
+router.post('/admin/productos/editar/:id_producto', UserController.upload.single('imagen'), UserController.actualizarProductos);
+router.get('/admin/productos/eliminar/:id_producto', UserController.eliminarProducto);
 
 module.exports = router;
 // Rutas para la navegacion de categorias

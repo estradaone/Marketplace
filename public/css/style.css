@@ -1,4 +1,13 @@
 /* Estilos personalizados para la página de bienvenida */
+body, html {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.container {
+    flex: 1; /* Esto hace que el contenido empuje el footer */
+}
+
 .navbar-brand {
     font-weight: bold;
 }
@@ -13,10 +22,10 @@
 }
 footer {
     text-align: center;
-    position: fixed;
     font-size: 1em;
     bottom: 0;
     width: 100%;
+    padding: 20px;
     height: 60px;
     overflow: hidden;
 }

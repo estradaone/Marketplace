@@ -3,15 +3,26 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const UserModel = require('../models/modelUser');
 const bcrypt = require('bcrypt');
+const multer = require('multer');
+
+//Configuracion para subir imagenes
+const storage = multer.diskStorage({
+    destination: './public/uploads/',
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+const upload = multer ({ storage });
+
 
 const UserController = {
     async registrarUsuario(req, res) {
         const { nombre, apellidos, email, password, telefono, rol } = req.body;
-    
+
         try {
             // Encriptar la contraseña antes de guardarla
             const hashedPassword = await bcrypt.hash(password, 10);
-    
+
             // Registrar al usuario en la base de datos
             await UserModel.registrarUsuario({
                 nombre,
@@ -21,7 +32,7 @@ const UserController = {
                 telefono,
                 rol,
             });
-    
+
             // Configurar la sesión del usuario
             req.session.user = {
                 nombre,
@@ -29,7 +40,7 @@ const UserController = {
                 email,
                 rol
             };
-    
+
             // Redirigir según el tipo de usuario
             let redirectUrl = '/';
             if (rol === 'administrador') {
@@ -39,7 +50,7 @@ const UserController = {
             } else if (rol === 'usuario') {
                 redirectUrl = '/'; // Ruta para usuarios
             }
-    
+
             res.redirect(redirectUrl);
         } catch (error) {
             console.error('Error al registrar el usuario:', error);
@@ -208,18 +219,18 @@ const UserController = {
 
     async resetPassword(req, res) {
         const { token, newPassword } = req.body;
-    
+
         try {
             // Verificar el token
             const user = await UserModel.verifyResetToken(token);
             if (!user) {
                 return res.render('reset-password', { token: null, message: 'Token inválido o expirado' });
             }
-    
+
             // Encriptar la nueva contraseña
             const hashedPassword = await bcrypt.hash(newPassword, 10);
             await UserModel.updatePassword(user.id_usuario, hashedPassword);
-    
+
             // Configurar la sesión del usuario
             req.session.user = {
                 id: user.id_usuario,
@@ -227,7 +238,7 @@ const UserController = {
                 rol: user.rol,
                 email: user.email
             };
-    
+
             // Redirigir según el rol del usuario
             let redirectUrl = '/';
             if (user.rol === 'administrador') {
@@ -235,7 +246,7 @@ const UserController = {
             } else if (user.rol === 'vendedor') {
                 redirectUrl = '/vendedor/bienvenida';
             }
-    
+
             res.redirect(redirectUrl);
         } catch (error) {
             console.error('Error al actualizar la contraseña e iniciar sesión:', error);
@@ -243,6 +254,87 @@ const UserController = {
         }
     },
 
+
+    // Mostrar el formulario
+    async mostrarFormularioAgregar(req, res) {
+        try {
+            const categorias = await UserModel.obtenerCategorias();
+            res.render('admin/agregar-producto', { categorias });
+        } catch (error) {
+            console.error('Error al mostrar el formulario', error);
+            res.status(500).send('Error al cargar el formulario');
+        }
+    },
+
+    // Agregar productos
+    async agregarProducto(req, res) {
+        try {
+            const { nombre_producto, descripcion, precio, cantidad, id_categoria } = req.body;
+            const imagen_url = req.file ? `/uploads/${req.file.filename}` : null; // Si no hay imagen, se deja como `null`
+
+            await UserModel.agregarProducto({ nombre_producto, descripcion, precio, cantidad, imagen_url, id_categoria });
+            res.redirect('/usuarios/admin/categorias/accesorios');
+        } catch (error) {
+            console.error('Error al agregar el producto', error);
+            res.status(500).send('Error al agregar el producto');
+        }
+    },
+
+    // Listar productos segun categorías
+    async listarProductos( req, res) {
+        try {
+            const { categoria } = req.params;
+            const productos = await UserModel.getProductsByCategory( categoria );
+            res.render(`admin/categorias/${categoria}`, { productos, categoria});
+        } catch (error) {
+            console.error('Error al obtener los productos:', error);
+            res.status(500).send('Error al obtener los productos');
+        }
+    },
+
+    // Obtener los productos
+    async obtenerProductos(req, res) {
+        try {
+            const { id_producto } = req.params;
+            const producto = await UserModel.obtenerProductosPorId(id_producto);
+            const categorias = await UserModel.obtenerCategorias();
+            res.render('admin/editar-producto', { producto, categorias });
+        } catch (error) {
+            console.error('Error al obtener el producto:', error);
+            res.status(500).send('Error al obtener el producto');
+        }
+    },
+
+    //Actualizar los productos
+    async actualizarProductos(req, res) {
+        try {
+            const { id_producto } = req.params;
+            const { nombre_producto, descripcion, precio, cantidad, id_categoria } = req.body;
+            const imagen_url = req.file ? `/uploads/${req.file.filename}` : null; // Si no hay imagen, no se modifica
+
+            await UserModel.actualizarProducto(id_producto, { nombre_producto, descripcion, precio, cantidad, imagen_url, id_categoria });
+            res.redirect('/usuarios/admin/categorias/accesorios');
+        } catch (error) {
+            console.error('Error al actualizar el producto', error);
+            res.status(500).send('Error al actualizar el producto');
+        }
+    },
+
+    // Eliminar productos
+    async eliminarProducto(req, res) {
+        try {
+            const { id_producto } = req.params;
+            await UserModel.eliminarProducto( id_producto );
+            res.redirect('/usuarios/admin/categorias/accesorios');
+        } catch (error) {
+            console.error('Error al eliminar el producto', error);
+            res.status(500).send('Error al eliminar el producto');
+        }
+    },
+
+
+
 };
 
 module.exports = UserController;
+module.exports.upload = upload;
