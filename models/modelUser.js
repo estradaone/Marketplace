@@ -54,7 +54,7 @@ const UserModel = {
         await pool.query(query, [newPassword, id]);
     },
 
-    // -----CRUD ---------
+    // -----CRUD ADMIN ---------
     //Obtener Por categoria
     async obtenerCategorias() {
         const query = 'SELECT id_categoria, nombre_categoria FROM categorias';
@@ -101,6 +101,40 @@ const UserModel = {
     async eliminarProducto(id_producto) {
         const query = 'DELETE FROM productos WHERE id_producto = ?';
         await pool.query(query, [id_producto]);
+    },
+
+    async obtenerUsuarios() {
+        const query = 'SELECT * FROM usuarios';
+        const [rows] = await pool.query(query);
+        return rows;
+    },
+
+    async agregarUsuario({ nombre, apellidos, email, password, telefono, rol }) {
+        const query = `
+            INSERT INTO usuarios (nombre, apellidos, email, password, telefono, estado, rol)
+            VALUES (?, ?, ?, ?, ?, 'activo', ?)
+        `;
+        await pool.query(query, [nombre, apellidos, email, password, telefono, rol]);
+    },
+
+    async obtenerUsuarioPorId( id_usuario ) {
+        const query = 'SELECT * FROM usuarios WHERE id_usuario = ?';
+        const [rows] = await pool.query(query, [ id_usuario ]);
+        return rows[0];
+    },
+
+    async actualizarUsuarios(id_usuario,  { nombre, apellidos, email,  telefono, rol }){
+        const query = `
+            UPDATE usuarios 
+            SET nombre = ?, apellidos = ?, email = ?, telefono = ?, rol = ?
+            WHERE id_usuario = ?
+        `;
+        await pool.query( query, [nombre, apellidos, email, telefono, rol, id_usuario]);
+    },
+
+    async cambiarEstadoUsuario(id_usuario, estado) {
+        const query = 'UPDATE usuarios SET estado = ? WHERE id_usuario = ?';
+        await pool.query( query, [estado, id_usuario]);
     }
 
 };

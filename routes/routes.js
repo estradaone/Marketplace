@@ -62,6 +62,15 @@ router.get('/admin/productos/editar/:id_producto', UserController.obtenerProduct
 router.post('/admin/productos/editar/:id_producto', UserController.upload.single('imagen'), UserController.actualizarProductos);
 router.get('/admin/productos/eliminar/:id_producto', UserController.eliminarProducto);
 
+// Ruta del CRUD de Usuarios (ADMIN)
+router.get('/admin/usuarios', UserController.listarUsuarios);
+router.get('/admin/usuarios/agregar', UserController.mostrarFormularioAgregarUsuario);
+router.post('/admin/usuarios/agregar', UserController.agregarUsuario);
+router.get('/admin/usuarios/editar/:id_usuario', UserController.obtenerUsuarioParaEditar);
+router.post('/admin/usuarios/editar/:id_usuario', UserController.actualizarUsuario);
+router.post('/admin/usuarios/suspender/:id_usuario', UserController.suspenderUsuario);
+router.post('/admin/usuarios/activar/:id_usuario', UserController.activarUsuario);
+
 module.exports = router;
 // Rutas para la navegacion de categorias
 
