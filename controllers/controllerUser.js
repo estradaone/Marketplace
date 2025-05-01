@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 const UserModel = require('../models/modelUser');
 const bcrypt = require('bcrypt');
 const multer = require('multer');
+const { error } = require('console');
 
 //Configuracion para subir imagenes
 const storage = multer.diskStorage({
@@ -63,6 +64,9 @@ const UserController = {
         try {
             const user = await UserModel.authenticateUser(email, password);
             if (user) {
+                if(user.estado === 'suspendido') {
+                    return res.render('loggin', { error: 'Tu cuenta esta suspendida'});
+                }
                 req.session.user = user;
                 res.redirect('/');
             } else {
@@ -382,6 +386,17 @@ const UserController = {
         } catch (error) {
             console.error('Error al actualizar el usuario:', error);
             res.status(500).send('Error al actualizar el usuario');
+        }
+    },
+
+    //Listar lo usuarios suspendidos
+    async listarUsuariosSuspendidos (req, res) {
+        try {
+            const usuariosSuspendidos = await UserModel.obtenerUsuariosPorEstado( 'suspendido' );
+            res.render('admin/usuarios-suspendidos', { usuariosSuspendidos });
+        } catch (error) {
+            console.error('Error al listar los usuarios suspendidos:', error);
+            res.status(500).send('Error al listar los usuarios suspendidos');
         }
     },
 

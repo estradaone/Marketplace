@@ -68,6 +68,7 @@ router.get('/admin/usuarios/agregar', UserController.mostrarFormularioAgregarUsu
 router.post('/admin/usuarios/agregar', UserController.agregarUsuario);
 router.get('/admin/usuarios/editar/:id_usuario', UserController.obtenerUsuarioParaEditar);
 router.post('/admin/usuarios/editar/:id_usuario', UserController.actualizarUsuario);
+router.get('/admin/usuarios/suspendidos', UserController.listarUsuariosSuspendidos);
 router.post('/admin/usuarios/suspender/:id_usuario', UserController.suspenderUsuario);
 router.post('/admin/usuarios/activar/:id_usuario', UserController.activarUsuario);
 

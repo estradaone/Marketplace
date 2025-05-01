@@ -132,6 +132,13 @@ const UserModel = {
         await pool.query( query, [nombre, apellidos, email, telefono, rol, id_usuario]);
     },
 
+    //Listar los usuarios suspendidos
+    async obtenerUsuariosPorEstado( estado ) {
+        const query = 'SELECT * FROM usuarios WHERE estado = ?';
+        const [rows] = await pool.query( query, [ estado ]);
+        return rows;
+    },
+
     async cambiarEstadoUsuario(id_usuario, estado) {
         const query = 'UPDATE usuarios SET estado = ? WHERE id_usuario = ?';
         await pool.query( query, [estado, id_usuario]);
