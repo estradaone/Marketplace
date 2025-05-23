@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + '-' + file.originalname);
     }
 });
-const upload = multer ({ storage });
+const upload = multer({ storage });
 
 
 const UserController = {
@@ -64,8 +64,8 @@ const UserController = {
         try {
             const user = await UserModel.authenticateUser(email, password);
             if (user) {
-                if(user.estado === 'suspendido') {
-                    return res.render('loggin', { error: 'Tu cuenta esta suspendida'});
+                if (user.estado === 'suspendido') {
+                    return res.render('loggin', { error: 'Tu cuenta esta suspendida' });
                 }
                 req.session.user = user;
                 res.redirect('/');
@@ -285,11 +285,11 @@ const UserController = {
     },
 
     // Listar productos segun categorías
-    async listarProductos( req, res) {
+    async listarProductos(req, res) {
         try {
             const { categoria } = req.params;
-            const productos = await UserModel.getProductsByCategory( categoria );
-            res.render(`admin/categorias/${categoria}`, { productos, categoria});
+            const productos = await UserModel.getProductsByCategory(categoria);
+            res.render(`admin/categorias/${categoria}`, { productos, categoria });
         } catch (error) {
             console.error('Error al obtener los productos:', error);
             res.status(500).send('Error al obtener los productos');
@@ -328,7 +328,7 @@ const UserController = {
     async eliminarProducto(req, res) {
         try {
             const { id_producto } = req.params;
-            await UserModel.eliminarProducto( id_producto );
+            await UserModel.eliminarProducto(id_producto);
             res.redirect('/usuarios/admin/categorias/accesorios');
         } catch (error) {
             console.error('Error al eliminar el producto', error);
@@ -336,10 +336,10 @@ const UserController = {
         }
     },
 
-    async listarUsuarios (req, res) {
+    async listarUsuarios(req, res) {
         try {
             const usuarios = await UserModel.obtenerUsuarios();
-            res.render('admin/usuarios', {usuarios});
+            res.render('admin/usuarios', { usuarios });
         } catch (error) {
             console.error('Error al listar los usuarios', error);
             res.status(500).send('Error al listar los usuarios');
@@ -347,16 +347,16 @@ const UserController = {
     },
 
     //Mostrar formulario para agregar usuarios
-    async mostrarFormularioAgregarUsuario (req, res) {
+    async mostrarFormularioAgregarUsuario(req, res) {
         res.render('admin/agregar-usuario');
     },
 
     // Agregar usuario
-    async agregarUsuario (req, res) {
-        const { nombre, apellidos, email, password, telefono, rol} = req.body;
+    async agregarUsuario(req, res) {
+        const { nombre, apellidos, email, password, telefono, rol } = req.body;
         try {
             const hashedPassword = await bcrypt.hash(password, 10); // Encriptar la contraseña
-            await UserModel.agregarUsuario({ nombre, apellidos, email, password: hashedPassword, telefono, rol});
+            await UserModel.agregarUsuario({ nombre, apellidos, email, password: hashedPassword, telefono, rol });
             res.redirect('/usuarios/usuariosExistentes');
         } catch (error) {
             console.error('Error al agregar el usuario', error);
@@ -365,10 +365,10 @@ const UserController = {
     },
 
     //Obtener usuario para poder editar
-    async obtenerUsuarioParaEditar (req, res) {
+    async obtenerUsuarioParaEditar(req, res) {
         const { id_usuario } = req.params;
         try {
-            const usuario = await UserModel.obtenerUsuarioPorId( id_usuario );
+            const usuario = await UserModel.obtenerUsuarioPorId(id_usuario);
             res.render('admin/editar-usuario', { usuario });
         } catch (error) {
             console.error('Error al obtener el usuario', error);
@@ -377,11 +377,11 @@ const UserController = {
     },
 
     // Actualizar usuario
-    async actualizarUsuario (req, res) {
+    async actualizarUsuario(req, res) {
         const { id_usuario } = req.params;
-        const { nombre, apellidos, email, telefono, rol} = req.body;
+        const { nombre, apellidos, email, telefono, rol } = req.body;
         try {
-            await UserModel.actualizarUsuarios( id_usuario, { nombre, apellidos, email, telefono, rol});
+            await UserModel.actualizarUsuarios(id_usuario, { nombre, apellidos, email, telefono, rol });
             res.redirect('/usuarios/usuariosExistentes');
         } catch (error) {
             console.error('Error al actualizar el usuario:', error);
@@ -390,9 +390,9 @@ const UserController = {
     },
 
     //Listar lo usuarios suspendidos
-    async listarUsuariosSuspendidos (req, res) {
+    async listarUsuariosSuspendidos(req, res) {
         try {
-            const usuariosSuspendidos = await UserModel.obtenerUsuariosPorEstado( 'suspendido' );
+            const usuariosSuspendidos = await UserModel.obtenerUsuariosPorEstado('suspendido');
             res.render('admin/usuarios-suspendidos', { usuariosSuspendidos });
         } catch (error) {
             console.error('Error al listar los usuarios suspendidos:', error);
@@ -401,30 +401,72 @@ const UserController = {
     },
 
     // Suspender usuarios
-    async suspenderUsuario (req, res) {
+    async suspenderUsuario(req, res) {
         const { id_usuario } = req.params;
         try {
-            await UserModel.cambiarEstadoUsuario( id_usuario, 'suspendido');
+            await UserModel.cambiarEstadoUsuario(id_usuario, 'suspendido');
             res.redirect('/usuarios/usuariosExistentes');
         } catch (error) {
             console.error('Error al suspender el usuario', error);
             res.status(500).send('Error al suspender el usuario');
         }
     },
-    
+
     //Activar usuario
-    async activarUsuario (req, res) {
+    async activarUsuario(req, res) {
         const { id_usuario } = req.params;
         try {
-            await UserModel.cambiarEstadoUsuario( id_usuario, 'activo');
+            await UserModel.cambiarEstadoUsuario(id_usuario, 'activo');
             res.redirect('/usuarios/usuariosExistentes');
         } catch (error) {
             console.error('Error al activar el usuario', error);
             res.status(500).send('Error al activar el usuario');
         }
-    }
+    },
+
+    //Tienda
+    //Mostar productos en la pagina de bienvenida
+    async mostrarTiendaBienvenida (req, res) {
+        try {
+            const productos = await UserModel.obtenerProductos();
+            // console.log("Productos cargados en controlador:", productos);
+            res.render('bienvenida', {productos});
+        } catch (error) {
+            console.error('Error al obtener los productos', error);
+            res.status(500).send('Error al cargar los productos');
+        }
+    },
+    async mostrarTiendaUsuario(req, res) {
+        try {
+            const productos = await UserModel.obtenerProductos(); // Consulta los productos
+            // console.log("Productos cargados en controlador:", productos); // Depuración
+            res.render('usuarios/tienda', { productos }); // Envía los productos a la vista
+        } catch (error) {
+            console.error('Error al obtener productos:', error);
+            res.status(500).send('Error al cargar la tienda');
+        }
+    },
+
+    async mostrarTiendaAdministrador(req, res) {
+        try {
+            if (!req.session.user || req.session.user.rol !== 'administrador') {
+                return res.redirect('/usuarios/tienda');
+            }
+
+            const productos = await UserModel.obtenerProductos(); // Obtener productos desde el modelo
+            // console.log("Productos cargados en Admin:", productos); // Depuración
+            res.render('admin/tienda', { productos }); // Pasando los productos a la vista
+        } catch (error) {
+            console.error('Error al obtener productos:', error);
+            res.status(500).send('Error al cargar la tienda de administrador');
+        }
+    },
 
 };
 
-module.exports = UserController;
-module.exports.upload = upload;
+module.exports = {
+    ...UserController,
+    upload
+};
+// module.exports = UserController;
+// module.exports.upload = upload;

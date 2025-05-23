@@ -176,3 +176,45 @@ h1.text-center.mb-4 {
         transform: scale(1);
     }
 }
+
+/* Estilos del menú de categorías */
+aside {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.list-group-item a {
+    text-decoration: none;
+    color: #333;
+}
+
+.list-group-item a:hover {
+    color: #007bff;
+}
+
+/* Estilos de productos */
+.card {
+    transition: transform 0.3s ease-in-out;
+    border-radius: 10px;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card-img-top {
+    height: 250px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+/* Pie de página */
+footer {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #ddd;
+}

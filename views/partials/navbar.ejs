@@ -36,11 +36,17 @@
                     </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="/tienda">Tienda</a></li>
+                <li class="nav-item">
+                    <% if (user && user.rol === 'administrador') { %>
+                        <a class="nav-link" href="/usuarios/admin/tienda">Tienda</a>
+                    <% } else { %>
+                        <a class="nav-link" href="/usuarios/tienda">Tienda</a>
+                    <% } %>
+                </li>
                 <li class="nav-item"><a class="nav-link" href="/nosotros">Nosotros</a></li>
                 <li class="nav-item"><a class="nav-link" href="/ayuda">Ayuda</a></li>
                 <% if (user) { %>
-                    <li class="nav-item"><a class="nav-link" href="/compras">Mis compras</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/usuarios/carrito">Mis compras</a></li>
                     <% if (user.rol === 'administrador') { %>
                         <li class="nav-item"><a class="nav-link" href="/usuarios/usuariosExistentes">Usuarios</a></li>
                     <% } %>

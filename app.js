@@ -7,6 +7,7 @@ const https = require('https');
 const engine = require('ejs-locals');
 const userRoutes = require('./routes/routes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const UserController = require('./controllers/controllerUser');
 
 const app = express();
 const PORT = 3001;
@@ -42,13 +43,8 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Rutas para la navegación 
-app.get('/', (req, res) => {
-    res.render('bienvenida');
-});
+app.get('/', UserController.mostrarTiendaBienvenida);
 
-app.get('/tienda', (req, res) => {
-    res.render('tienda');
-});
 app.get('/nosotros', (req, res) => {
     res.render('nosotros');
 });

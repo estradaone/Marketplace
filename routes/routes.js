@@ -15,6 +15,19 @@ router.get('/registro', (req, res) => {
     res.render('registro.ejs');
 });
 
+// Config de tienda admin
+
+
+// Config de tienda usuarios
+router.get('/usuarios/tienda', (req, res) => {
+    res.render('usuarios/tienda');
+});
+
+// Ruta de los productos de la tienda
+router.get('/tienda', UserController.mostrarTiendaUsuario);
+router.get('/admin/tienda', UserController.mostrarTiendaAdministrador);
+
+
 // Ruta para cerrar sesión
 router.get('/logout', UserController.logout);
 
@@ -72,6 +85,24 @@ router.get('/admin/usuarios/suspendidos', UserController.listarUsuariosSuspendid
 router.post('/admin/usuarios/suspender/:id_usuario', UserController.suspenderUsuario);
 router.post('/admin/usuarios/activar/:id_usuario', UserController.activarUsuario);
 
+
+
+router.post('/api/carrito/agregar', (req, res)=> {
+    const { idProducto } = req.body;
+    //verifica si el usuario está autenticado
+    if(!req.session.user) {
+        return res.status(401).json({ success: false, message: "Debes iniciar sesión"});
+    }
+    //Guardar el producto en la sesión del usuario o en la base de datos 
+    console.log(`Producto ${idProducto} agregado al carrito por el usuario ${req.session.user.id}`);
+
+    res.json({success: true});
+}),
+
+router.get('/carrito', (req, res) => {
+    const carrito = req.session.carrito || []; // Obtiene el carrito desde la sesión
+    res.render('carrito', { carrito });
+});
 module.exports = router;
 // Rutas para la navegacion de categorias
 

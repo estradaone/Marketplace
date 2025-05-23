@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Tienda - administrador</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <!-- Incluir la navegacion -->
+    <%- include ../partials/navbar.ejs %> <br>
+        <div class="container mt-5">
+            <h1>Panel de Tienda - Administrador</h1>
+            <p>Bienvenido al panel de administración de la tienda.</p>
+            <a href="/usuarios/admin/productos/agregar" class="btn btn-success">Agregar Producto</a>
+            <a href="/admin/categorias" class="btn btn-primary">Administrar Categorías</a>
+            <div class="row">
+            <!-- Menú lateral de categorías -->
+            <aside class="col-md-3">
+                <h4>Categorías</h4>
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/accesorios">Accesorios</a></li>
+                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/bolsos">Bolsas y Monederos</a></li>
+                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/sombreros">Sombreros</a></li>
+                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/pulseras">Pulseras</a></li>
+                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/blusas">Blusas Bordadas</a></li>
+                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/peluches">Peluches</a></li>
+                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/manualidades">Manualidades</a></li>
+                    <li class="list-group-item"><a href="/usuarios/usuariosExistentes/categorias/llaveros">Llaveros</a></li>
+                </ul>
+            </aside>
+
+            <!-- Sección de productos -->
+            <main class="col-md-9">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h1>Tienda Online</h1>
+                    <button class="btn btn-outline-secondary">Filtrar</button>
+                </div>
+                <div class="row">
+                    <% console.log("Productos en la vista:", productos); %>
+                    <% if (Array.isArray(productos) && productos.length > 0) { %>
+                        <% productos.forEach(producto => { %>
+                            <div class="col-md-4 mb-4">
+                                <div class="card shadow-sm">
+                                    <img src="<%= producto.imagen_url %>" class="card-img-top img-fluid" alt="<%= producto.nombre_producto %>">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title"><%= producto.nombre_producto %></h5>
+                                        <p class="card-text text-success"><strong>$<%= producto.precio %></strong></p>
+                                        <button class="btn btn-primary">Agregar al carrito</button>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p>No hay productos disponibles en la tienda.</p>
+                    <% } %>
+                </div>
+            </main>
+        </div>
+        </div>
+        
+
+        <!-- Incluir el footer -->
+        <%- include ../partials/footer.ejs %>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

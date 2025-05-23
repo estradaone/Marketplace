@@ -117,33 +117,44 @@ const UserModel = {
         await pool.query(query, [nombre, apellidos, email, password, telefono, rol]);
     },
 
-    async obtenerUsuarioPorId( id_usuario ) {
+    async obtenerUsuarioPorId(id_usuario) {
         const query = 'SELECT * FROM usuarios WHERE id_usuario = ?';
-        const [rows] = await pool.query(query, [ id_usuario ]);
+        const [rows] = await pool.query(query, [id_usuario]);
         return rows[0];
     },
 
-    async actualizarUsuarios(id_usuario,  { nombre, apellidos, email,  telefono, rol }){
+    async actualizarUsuarios(id_usuario, { nombre, apellidos, email, telefono, rol }) {
         const query = `
             UPDATE usuarios 
             SET nombre = ?, apellidos = ?, email = ?, telefono = ?, rol = ?
             WHERE id_usuario = ?
         `;
-        await pool.query( query, [nombre, apellidos, email, telefono, rol, id_usuario]);
+        await pool.query(query, [nombre, apellidos, email, telefono, rol, id_usuario]);
     },
 
     //Listar los usuarios suspendidos
-    async obtenerUsuariosPorEstado( estado ) {
+    async obtenerUsuariosPorEstado(estado) {
         const query = 'SELECT * FROM usuarios WHERE estado = ?';
-        const [rows] = await pool.query( query, [ estado ]);
+        const [rows] = await pool.query(query, [estado]);
         return rows;
     },
 
     async cambiarEstadoUsuario(id_usuario, estado) {
         const query = 'UPDATE usuarios SET estado = ? WHERE id_usuario = ?';
-        await pool.query( query, [estado, id_usuario]);
-    }
+        await pool.query(query, [estado, id_usuario]);
+    },
+
+
+    //Tienda
+    async obtenerProductos() {
+        const query = 'SELECT * FROM productos';
+        const [rows] = await pool.query(query);
+        // console.log("Productos desde la BD Admin", rows);
+        return rows;
+    },
 
 };
+
+
 
 module.exports = UserModel;

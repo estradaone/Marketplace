@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios Existentes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <%- include partials/navbar.ejs %>
+
+    <h1 class="text-center">Carrito de Compras</h1>
+
+    <div class="container">
+        <div class="row">
+            <% if (Array.isArray(carrito) && carrito.length > 0) { %>
+                <% carrito.forEach(producto => { %>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="<%= producto.imagen_url %>" class="card-img-top" alt="<%= producto.nombre_producto %>">
+                            <div class="card-body text-center">
+                                <h5 class="card-title"><%= producto.nombre_producto %></h5>
+                                <p class="card-text"><strong>$<%= producto.precio %></strong></p>
+                                <button class="btn btn-danger eliminar-carrito" data-id="<%= producto.id_producto %>">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p class="text-center">Tu carrito está vacío.</p>
+            <% } %>
+        </div>
+        <a href="/usuarios/tienda" class="btn btn-primary">Seguir Comprando</a>
+    </div>
+
+    <%- include partials/footer.ejs %>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
