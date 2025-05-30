@@ -86,18 +86,27 @@ router.post('/admin/usuarios/suspender/:id_usuario', UserController.suspenderUsu
 router.post('/admin/usuarios/activar/:id_usuario', UserController.activarUsuario);
 
 
-
-router.post('/api/carrito/agregar', (req, res)=> {
-    const { idProducto } = req.body;
-    //verifica si el usuario está autenticado
-    if(!req.session.user) {
-        return res.status(401).json({ success: false, message: "Debes iniciar sesión"});
+router.get('/api/verificar-sesion', (req, res) => {
+    if (req.session.user) {
+        res.json({ autenticado: true });
+    } else {
+        res.json({ autenticado: false });
     }
-    //Guardar el producto en la sesión del usuario o en la base de datos 
-    console.log(`Producto ${idProducto} agregado al carrito por el usuario ${req.session.user.id}`);
+});
 
-    res.json({success: true});
-}),
+router.post('/api/carrito/agregar', (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ success: false, message: "Debes iniciar sesión." });
+    }
+
+    const { idProducto } = req.body;
+    req.session.carrito = req.session.carrito || [];
+    req.session.carrito.push(idProducto);
+
+    console.log(`Producto ${idProducto} agregado al carrito.`); // DEPURACIÓN
+
+    res.json({ success: true });
+});
 
 router.get('/carrito', (req, res) => {
     const carrito = req.session.carrito || []; // Obtiene el carrito desde la sesión
