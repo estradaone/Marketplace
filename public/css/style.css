@@ -219,4 +219,28 @@ footer {
     border-top: 1px solid #ddd;
 }
 
-/* Carrito de compras */
+/* Notificaciones */
+.mensaje-notificacion {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #28a745;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+}
+.mensaje-error {
+    background-color: #dc3545 !important;
+}
+.fade-out {
+    animation: fadeOut 3s forwards;
+}
+@keyframes fadeOut {
+    0% { opacity: 1;}
+    100% {opacity: 0;}
+}

@@ -12,6 +12,7 @@
 <body>
     <!-- Incluir la navegacion -->
     <%- include partials/navbar.ejs %>
+    <%- include partials/alertas.ejs %>
 
 
     <!-- Contenido principal -->
@@ -62,7 +63,7 @@
                                         data-nombre="<%= producto.nombre_producto %>"
                                         data-precio="<%= producto.precio %>"
                                         data-imagen="<%= producto.imagen_url %>">
-                                        Agregar al carrito
+                                        🛒
                                     </button>
                                     <a href="/usuarios/tienda" class="btn btn-success">Ver más</a>
                                 </div>
@@ -82,6 +83,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/carrito.js"></script>
+    <script src="/js/notificaciones.js"></script>
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Agregar productos al carrito con validación de sesión
     document.querySelectorAll('.agregar-carrito').forEach(boton => {
+        console.log("Boton presionado")
         boton.addEventListener('click', async (event) => {
             const boton = event.target.closest('.agregar-carrito');
             const idProducto = boton.dataset.id;
@@ -9,18 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
             const imagenProducto = boton.dataset.imagen;
 
             try {
-                // Verificar sesión antes de agregar productos
                 const response = await fetch('/usuarios/api/verificar-sesion');
                 if (!response.ok) throw new Error(`Error en la solicitud: ${response.status}`);
 
                 const data = await response.json();
                 if (!data.autenticado) {
-                    alert("Debes iniciar sesión para agregar productos al carrito.");
+                    mostrarNotificacion("⚠️ Debes iniciar sesión para agregar productos.", "error");
                     window.location.href = "/usuarios/loggin"; 
                     return;
                 }
 
-                // Enviar datos al backend
                 const addResponse = await fetch('/usuarios/api/carrito/agregar', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -30,19 +28,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 const addData = await addResponse.json();
 
                 if (addData.success) {
-                    alert("Producto agregado al carrito!");
-                    location.reload(); // Recargar página para ver cambios
+                    mostrarNotificacion("✅ Producto agregado al carrito.");
+                    location.reload();
                 } else {
-                    alert("Error al agregar el producto.");
+                    mostrarNotificacion("❌ Error al agregar el producto.", "error");
                 }
             } catch (error) {
                 console.error("Error en la solicitud:", error);
-                alert("Hubo un problema al procesar la solicitud. Inténtalo de nuevo.");
+                mostrarNotificacion("❌ Hubo un problema al procesar la solicitud.", "error");
             }
         });
     });
 
-    // Eliminar productos del carrito completamente
     document.querySelectorAll('.eliminar-carrito').forEach(boton => {
         boton.addEventListener('click', async (event) => {
             const idProducto = event.target.dataset.id;
@@ -57,14 +54,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 const deleteData = await deleteResponse.json();
 
                 if (deleteData.success) {
-                    alert("Producto eliminado del carrito!");
-                    location.reload(); // Recargar página para ver cambios
+                    mostrarNotificacion("✅ Producto eliminado del carrito.");
+                    location.reload();
                 } else {
-                    alert("Error al eliminar el producto.");
+                    mostrarNotificacion("❌ Error al eliminar el producto.", "error");
                 }
             } catch (error) {
                 console.error("Error en la solicitud:", error);
-                alert("Hubo un problema al procesar la solicitud. Inténtalo de nuevo.");
+                mostrarNotificacion("❌ Hubo un problema al procesar la solicitud.", "error");
             }
         });
     });
