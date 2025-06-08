@@ -57,7 +57,13 @@
                                 <div class="card-body text-center">
                                     <h5 class="card-title"><%= producto.nombre_producto %></h5>
                                     <p class="card-text text-success"><strong>$<%= producto.precio %></strong></p>
-                                    <button class="btn btn-primary agregar-carrito" data-id="<%= producto.id_producto %>">Agregar al carrito</button>
+                                    <button class="agregar-carrito"
+                                        data-id="<%= producto.id_producto %>"
+                                        data-nombre="<%= producto.nombre_producto %>"
+                                        data-precio="<%= producto.precio %>"
+                                        data-imagen="<%= producto.imagen_url %>">
+                                        Agregar al carrito
+                                    </button>
                                     <a href="/usuarios/tienda" class="btn btn-success">Ver más</a>
                                 </div>
                             </div>

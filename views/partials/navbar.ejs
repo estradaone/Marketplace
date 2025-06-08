@@ -19,19 +19,19 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Categorías </a>
                     <ul class="dropdown-menu bg-crema" aria-labelledby="navbarDropdown">
                         <% if (user && user.rol === 'administrador') { %>
-                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/accesorios">Accesorios</a></li>
-                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/bolsos">Bolsos</a></li>
-                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/sombreros">Sombreros</a></li>
-                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/blusas">Blusas</a></li>
-                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/peluches">Peluches</a></li>
-                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/llaveros">Llaveros</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/accesorios">🪄 Accesorios</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/bolsos">👜 Bolsos</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/sombreros">👒 Sombreros</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/blusas">👚 Blusas</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/peluches">🧸 Peluches</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/admin/categorias/llaveros">🖇️ Llaveros</a></li>
                         <% } else { %>
-                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/accesorios">Accesorios</a></li>
-                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/bolsos">Bolsos</a></li>
-                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/sombreros">Sombreros</a></li>
-                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/blusas">Blusas</a></li>
-                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/peluches">Peluches</a></li>
-                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/llaveros">Llaveros</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/accesorios">🪄 Accesorios</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/bolsos">👜 Bolsos</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/sombreros">👒 Sombreros</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/blusas">👚 Blusas</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/peluches">🧸 Peluches</a></li>
+                            <li><a class="dropdown-item" href="/usuarios/usuarios/categorias/llaveros">🖇️ Llaveros</a></li>
                         <% } %>
                     </ul>
                 </li>
@@ -46,7 +46,7 @@
                 <li class="nav-item"><a class="nav-link" href="/nosotros">Nosotros</a></li>
                 <li class="nav-item"><a class="nav-link" href="/ayuda">Ayuda</a></li>
                 <% if (user) { %>
-                    <li class="nav-item"><a class="nav-link" href="/usuarios/carrito">Mis compras</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/usuarios/carrito">Mis compras 🛒</a></li>
                     <% if (user.rol === 'administrador') { %>
                         <li class="nav-item"><a class="nav-link" href="/usuarios/usuariosExistentes">Usuarios</a></li>
                     <% } %>

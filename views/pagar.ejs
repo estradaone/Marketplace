@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagar con PayPal</title>
+    <script src="https://www.paypal.com/sdk/js?client-id=AZ3BCA9fe6bg1Pb-5EILxOCzMoR0fnkuVkfl0CqKx2ypKcvxKobouhvHRlBxLol0ar3pLYGCOuIDbxQ4"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="bg-light">
+    <div class="container py-5 text-center">
+        <h2 class="fw-bold text-primary mb-4">💳 Pagar con PayPal</h2>
+        <div class="card shadow-lg p-4">
+            <h4 class="fw-bold text-dark">Total a Pagar: <span id="total-pagar" class="text-success">$<%= carrito.reduce((total, producto) => total + producto.precio * (producto.cantidad || 1), 0) %></span></h4>
+            <div id="paypal-button-container" class="mt-4"></div>
+        </div>
+    </div>
+
+    <script src="/js/pagar.js"></script>
+</body>
+
+</html>

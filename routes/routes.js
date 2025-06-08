@@ -95,23 +95,49 @@ router.get('/api/verificar-sesion', (req, res) => {
 });
 
 router.post('/api/carrito/agregar', (req, res) => {
-    if (!req.session.user) {
-        return res.status(401).json({ success: false, message: "Debes iniciar sesión." });
+    const { idProducto, nombre, precio, imagen_url } = req.body;
+
+    if (!idProducto || !nombre || !precio || !imagen_url) {
+        return res.status(400).json({ success: false, message: "Datos faltantes en la solicitud." });
     }
 
-    const { idProducto } = req.body;
     req.session.carrito = req.session.carrito || [];
-    req.session.carrito.push(idProducto);
+    const productoExistente = req.session.carrito.find(p => p.id_producto === idProducto);
 
-    console.log(`Producto ${idProducto} agregado al carrito.`); // DEPURACIÓN
+    if (productoExistente) {
+        productoExistente.cantidad += 1;
+    } else {
+        req.session.carrito.push({ id_producto: idProducto, nombre_producto: nombre, precio, imagen_url, cantidad: 1 });
+    }
+
+    res.json({ success: true });
+});
+
+router.post('/api/carrito/eliminar', (req, res) => {
+    const { idProducto } = req.body;
+
+    req.session.carrito = req.session.carrito || [];
+    req.session.carrito = req.session.carrito.filter(p => p.id_producto !== idProducto);
 
     res.json({ success: true });
 });
 
 router.get('/carrito', (req, res) => {
-    const carrito = req.session.carrito || []; // Obtiene el carrito desde la sesión
+    const carrito = req.session.carrito || [];
     res.render('carrito', { carrito });
 });
+
+//Pagar PayPal
+router.get('/pagar', (req, res) => {
+    const carrito = req.session.carrito || [];
+    res.render('pagar', { carrito });
+});
+// Confirmacion Paypal
+router.get('/confirmacion', (req, res) => {
+    res.render('confirmacion');
+});
+
+
 module.exports = router;
 // Rutas para la navegacion de categorias
 

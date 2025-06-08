@@ -28,6 +28,10 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(session({ secret: 'supersecreto', resave: false, saveUninitialized: true }));
+
 // Middleware para pasar el rol del usuario a las vistas
 app.use((req, res, next) => {
     res.locals.user = req.session.user || null;

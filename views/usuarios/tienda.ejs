@@ -19,14 +19,14 @@
             <aside class="col-md-3">
                 <h4>Categorías</h4>
                 <ul class="list-group">
-                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/accesorios">Accesorios</a></li>
-                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/bolsos">Bolsas y Monederos</a></li>
-                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/sombreros">Sombreros</a></li>
-                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/pulseras">Pulseras</a></li>
-                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/blusas">Blusas Bordadas</a></li>
-                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/peluches">Peluches</a></li>
-                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/manualidades">Manualidades</a></li>
-                    <li class="list-group-item"><a href="/usuarios/usuariosExistentes/categorias/llaveros">Llaveros</a></li>
+                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/accesorios">🪄 Accesorios</a></li>
+                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/bolsos">👜 Bolsas y Monederos</a></li>
+                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/sombreros">👒 Sombreros</a></li>
+                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/pulseras">📿Pulseras</a></li>
+                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/blusas">👚 Blusas Bordadas</a></li>
+                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/peluches">🧸 Peluches</a></li>
+                    <li class="list-group-item"><a href="/usuarios/usuarios/categorias/manualidades">🪅 Manualidades</a></li>
+                    <li class="list-group-item"><a href="/usuarios/usuariosExistentes/categorias/llaveros">🖇️ Llaveros</a></li>
                 </ul>
             </aside>
 
@@ -46,7 +46,13 @@
                                     <div class="card-body text-center">
                                         <h5 class="card-title"><%= producto.nombre_producto %></h5>
                                         <p class="card-text text-success"><strong>$<%= producto.precio %></strong></p>
-                                        <button class="btn btn-primary agregar-carrito" data-id="<%= producto.id_producto %>">Agregar al carrito</button>
+                                        <button class="agregar-carrito"
+                                            data-id="<%= producto.id_producto %>"
+                                            data-nombre="<%= producto.nombre_producto %>"
+                                            data-precio="<%= producto.precio %>"
+                                            data-imagen="<%= producto.imagen_url %>">
+                                            Agregar al carrito
+                                        </button>
                                     </div>
                                 </div>
                             </div>
