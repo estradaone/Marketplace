@@ -423,6 +423,17 @@ const UserController = {
             res.status(500).send('Error al activar el usuario');
         }
     },
+    // Eliminar usuarios
+    async eliminarUsuario(req, res) {
+        try {
+            const { id_usuario } = req.params;
+            await UserModel.eliminarUsuario(id_usuario);
+            res.redirect('/usuarios/admin/usuarios/suspendidos');
+        } catch (error) {
+            console.error('Error al eliminar el usuario', error);
+            res.status(500).send('Error al eliminar el usuario');
+        }
+    },
 
     //Tienda
     //Mostar productos en la pagina de bienvenida

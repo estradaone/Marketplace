@@ -14,7 +14,7 @@
     <%- include ../partials/navbar.ejs %> <br>
         <div class="container mt-5">
             <h1 class="mb-4">Editar Usuario</h1>
-            <form action="/usuarios/admin/usuarios/editar/<%= usuario.id_usuario %>" method="POST">
+            <form action="/usuarios/admin/usuarios/editar/<%= usuario.id_usuario %>?_method=PUT" method="POST">
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
                     <input type="text" id="nombre" name="nombre" class="form-control" value="<%= usuario.nombre %>"

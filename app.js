@@ -6,6 +6,7 @@ const fs = require('fs');
 const https = require('https');
 const engine = require('ejs-locals');
 const userRoutes = require('./routes/routes');
+const methodOverride = require('method-override');
 const categoryRoutes = require('./routes/categoryRoutes');
 const UserController = require('./controllers/controllerUser');
 
@@ -37,6 +38,9 @@ app.use((req, res, next) => {
     res.locals.user = req.session.user || null;
     next();
 });
+
+//Metodo Override
+app.use(methodOverride('_method'));
 
 // Servir archivos estáticos desde la carpeta 'public'
 app.use(express.static(path.join(__dirname, 'public')));

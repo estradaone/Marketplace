@@ -143,6 +143,11 @@ const UserModel = {
         const query = 'UPDATE usuarios SET estado = ? WHERE id_usuario = ?';
         await pool.query(query, [estado, id_usuario]);
     },
+    // ELiminar usuario
+    async eliminarUsuario(id_usuario) {
+        const query = 'DELETE FROM usuarios WHERE id_usuario = ?';
+        await pool.query(query, [id_usuario]);
+    },
 
 
     //Tienda

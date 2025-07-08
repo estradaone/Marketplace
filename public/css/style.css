@@ -238,7 +238,7 @@ footer {
     background-color: #dc3545 !important;
 }
 .fade-out {
-    animation: fadeOut 3s forwards;
+    animation: fadeOut 5s forwards;
 }
 @keyframes fadeOut {
     0% { opacity: 1;}

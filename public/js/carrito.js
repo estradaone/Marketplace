@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const data = await response.json();
                 if (!data.autenticado) {
                     mostrarNotificacion("⚠️ Debes iniciar sesión para agregar productos.", "error");
-                    window.location.href = "/usuarios/loggin"; 
+                    // window.location.href = "/usuarios/loggin"; 
                     return;
                 }
 

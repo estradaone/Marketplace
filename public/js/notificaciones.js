@@ -16,5 +16,9 @@ function mostrarNotificacion(mensaje, tipo = 'exito') {
     setTimeout(() => {
         notificacion.style.display = "none";
         notificacion.classList.remove("fade-out");
-    }, 3000);
+    }, 5000);
+}
+
+function confirmarEliminacion() {
+    return confirm("¿Estás seguro de que deseas eliminar este usuario suspendido? Esta acción no se puede deshacer.");
 }
