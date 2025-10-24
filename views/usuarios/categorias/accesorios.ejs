@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,64 +8,59 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
     <!-- Incluir la navegacion -->
     <%- include ../../partials/navbar.ejs %>
-    <%- include ../../partials/alertas.ejs %>
-    
-    <div class="container mt-5">
-        <h1 class="mb-4">Accesorios</h1>
+        <%- include ../../partials/alertas.ejs %>
 
-        <div class="row">
-            <% if (productos && productos.length > 0) { %>
-                <% productos.forEach(producto => { %>
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <img src="<%= producto.imagen_url %>" class="card-img-top" alt="<%= producto.nombre_producto %>" data-bs-toggle="modal" data-bs-target="#imageModal<%= producto.id_producto %>">
-                            <div class="card-body">
-                                <h5 class="card-title"><%= producto.nombre_producto %></h5>
-                                <p class="card-text"><%= producto.descripcion %></p>
-                                <p class="card-text"><strong>$<%= producto.precio %></strong></p>
-                                <button class="agregar-carrito"
-                                    data-id="<%= producto.id_producto %>"
-                                    data-nombre="<%= producto.nombre_producto %>"
-                                    data-precio="<%= producto.precio %>"
-                                    data-imagen="<%= producto.imagen_url %>">
-                                    🛒
-                                </button>
-                                <!-- <a href="#" class="btn btn-primary"></a> -->
-                            </div>
-                        </div>
-                    </div>
+            <div class="container mt-5">
+                <h1 class="mb-4 text-center">Accesorios Artesanales</h1>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="imageModal<%= producto.id_producto %>" tabindex="-1" aria-labelledby="imageModalLabel<%= producto.id_producto %>" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="imageModalLabel<%= producto.id_producto %>"><%= producto.nombre_producto %></h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <img src="<%= producto.imagen_url %>" class="modal-img img-fluid" alt="<%= producto.nombre_producto %>">
+                <div class="row">
+                    <% if (productos && productos.length> 0) { %>
+                        <% productos.forEach(producto=> { %>
+                            <div class="col-md-4 mb-4">
+                                <div class="card tarjeta-relacionada shadow-sm h-100">
+                                    <a href="/usuarios/producto/<%= producto.id_producto %>">
+                                        <img src="<%= producto.imagen_url %>" class="card-img-top img-fluid"
+                                            alt="<%= producto.nombre_producto %>">
+                                    </a>
+                                    <div class="card-body text-center">
+                                        <h6 class="card-title nombre-relacionado">
+                                            <a href="/usuarios/producto/<%= producto.id_producto %>"
+                                                class="text-decoration-none text-dark">
+                                                <%= producto.nombre_producto %>
+                                            </a>
+                                        </h6>
+                                        <!-- <p class="text-muted mb-1">
+                                            <%= producto.descripcion %>
+                                        </p> -->
+                                        <p class="text-success"><strong>$<%= producto.precio %></strong></p>
+                                        <button class="agregar-carrito mt-2" data-id="<%= producto.id_producto %>"
+                                            data-nombre="<%= producto.nombre_producto %>"
+                                            data-precio="<%= producto.precio %>"
+                                            data-imagen="<%= producto.imagen_url %>">
+                                            Añadir al carrito
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                <% }) %>
-            <% } else { %>
-                <p>No hay productos disponibles en esta categoría.</p>
-            <% } %>
-        </div>
-    </div>
+                            <% }) %>
+                                <% } else { %>
+                                    <p class="text-center">No hay productos disponibles en esta categoría.</p>
+                                    <% } %>
+                </div>
+            </div>
 
-    <%- include ../../partials/footer.ejs %>
+            <%- include ../../partials/footer.ejs %>
 
 
-    <!-- Bootstrap Bundle JS (includes Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/carrito.js"></script>
-    <script src="/js/notificaciones.js"></script>
+                <!-- Bootstrap Bundle JS (includes Popper) -->
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="/js/carrito.js"></script>
+                <script src="/js/notificaciones.js"></script>
 
 </body>
+
 </html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mis compras</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="bg-light">
+    <%- include partials/navbar.ejs %>
+
+        <% if (pedidos.length===0) { %>
+            <div class="alert alert-warning text-center mt-5">
+                No tienes pedidos registrados aún.
+            </div>
+            <% } else { %>
+                <h2 class="text-center text-primary my-4"> Mis Compras 🛒</h2>
+                <div class="container">
+                    <div class="row">
+                        <% pedidos.forEach(pedido=> {
+                            const fechaEntrega = new Date(pedido.fecha_entrega_estimada);
+                            const fechaPedido = new Date(pedido.fecha_pedido);
+                            const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
+                            'septiembre', 'octubre', 'noviembre', 'diciembre'];
+                            const diaEntrega = fechaEntrega.getDate();
+                            const mesEntrega = meses[fechaEntrega.getMonth()];
+                            const diaPedido = fechaPedido.getDate();
+                            const mesPedido = meses[fechaPedido.getMonth()];
+                            const añoPedido = fechaPedido.getFullYear();
+                            %>
+                            <div class="col-md-6 mb-4">
+                                <div class="card shadow-sm border rounded-3">
+                                    <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <img src="<%= pedido.imagen_url %>"
+                                                class="img-fluid rounded-start h-100 object-fit-cover"
+                                                alt="<%= pedido.nombre_producto %>">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <p class="text-muted mb-1">Pedido realizado el <%= diaPedido %> de <%=
+                                                            mesPedido %> de <%= añoPedido %>
+                                                </p>
+                                                <h5 class="card-title fw-bold">
+                                                    <%= pedido.nombre_producto %>
+                                                </h5>
+                                                <p class="mb-1"><strong>Cantidad:</strong>
+                                                    <%= pedido.cantidad %>
+                                                </p>
+                                                <p class="mb-1"><strong>Total:</strong> $<%= pedido.total %> MXN</p>
+                                                <p class="mb-1"><strong>Vendedor:</strong>
+                                                    <%= pedido.vendedor %>
+                                                </p>
+
+                                                <p class="mb-1"><strong>Estado:</strong>
+                                                    <span
+                                                        class="badge bg-<%= pedido.estado === 'entregado' ? 'success' : pedido.estado === 'enviado' ? 'info' : pedido.estado === 'cancelado' ? 'danger' : pedido.estado === 'procesado' ? 'primary' : 'secondary' %> text-uppercase">
+                                                        <%= pedido.estado %>
+                                                    </span>
+                                                </p>
+
+                                                <% if (pedido.numero_seguimiento) { %>
+                                                    <p class="mb-1"><strong>Número de seguimiento:</strong> <span
+                                                            class="text-dark">
+                                                            <%= pedido.numero_seguimiento %>
+                                                        </span></p>
+                                                    <% } %>
+
+                                                        <p class="mb-1">
+                                                            <strong>
+                                                                <%= pedido.estado==='cancelado' ? 'Cancelado el:'
+                                                                    : 'Entrega estimada:' %>
+                                                            </strong>
+                                                            <span
+                                                                class="<%= pedido.estado === 'cancelado' ? 'text-danger' : 'text-success' %>">
+                                                                <%= diaEntrega %> de <%= mesEntrega %>
+                                                            </span><br>
+                                                            <% if (pedido.estado==='cancelado' ) { %>
+                                                                <span class="text-danger small">Este pedido fue
+                                                                    cancelado. Si realizaste un pago, el reembolso está
+                                                                    en proceso.</span>
+                                                                <% } %>
+                                                        </p>
+
+                                                        <div class="mt-3 d-flex gap-2">
+                                                            <a href="/usuarios/ver-compra/<%= pedido.id_pedido %>"
+                                                                class="btn btn-outline-primary btn-sm">Ver compra</a>
+                                                            <a href="/usuarios/reordenar/<%= pedido.id_pedido %>"
+                                                                class="btn btn-outline-secondary btn-sm">Volver a
+                                                                comprar</a>
+
+                                                            <% if (pedido.estado==='procesado' ||
+                                                                pedido.estado==='enviado' ) { %>
+                                                                <form
+                                                                    action="/usuarios/cancelar-pedido/<%= pedido.id_pedido %>"
+                                                                    method="POST"
+                                                                    onsubmit="return confirm('¿Estás seguro de que deseas cancelar esta compra? Esta acción no se puede deshacer.')">
+                                                                    <button type="submit"
+                                                                        class="btn btn-outline-danger btn-sm">Cancelar
+                                                                        compra</button>
+                                                                </form>
+                                                                <% } else if (pedido.estado==='cancelado' ) { %>
+                                                                    <a href="/usuarios/rembolso/<%= pedido.id_pedido %>"
+                                                                        class="btn btn-outline-dark btn-sm">Ver
+                                                                        reembolso</a>
+                                                                    <% } %>
+                                                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                    </div>
+                </div>
+                <% } %>
+
+                    <%- include partials/footer.ejs %>
+                        <script
+                            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

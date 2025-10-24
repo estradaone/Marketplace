@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Compra</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <!-- Navbar y alertas -->
+    <%- include ../partials/navbar.ejs %>
+        <%- include ../partials/alertas.ejs %>
+
+            <div class="container my-5">
+                <h2 class="mb-4 text-center text-primary">Resumen de tu compra</h2>
+
+                <div class="card mx-auto p-4 shadow-sm border-0" style="max-width: 700px;">
+                    <!-- Productos -->
+                    <h5 class="card-title mb-3">🛍️ Productos comprados</h5>
+                    <% productos.forEach(p=> { %>
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="<%= p.imagen_url %>" alt="Producto" class="me-3 rounded" style="width: 80px;">
+                            <div>
+                                <strong>
+                                    <%= p.nombre_producto %>
+                                </strong><br>
+                                Cantidad: <%= p.cantidad %> | Precio unitario: $<%= p.precio_unitario %><br>
+                                        Subtotal: $<%= p.subtotal %>
+                            </div>
+                        </div>
+                        <% }) %>
+
+                            <hr>
+
+                            <!-- Envío -->
+                            <h5 class="card-title mb-3">🚚 Información de envío</h5>
+                            <p class="mb-2">
+                                <strong>Dirección:</strong>
+                                <%= pedido.direccion %>, <%= pedido.municipio %>, <%= pedido.estado2 %><br>
+                                            <strong>Ciudad:</strong>
+                                            <%= pedido.ciudad %><br>
+                                                <strong>Código Postal:</strong>
+                                                <%= pedido.codigo_postal %><br>
+                                                    <strong>Teléfono:</strong>
+                                                    <%= pedido.telefono %><br>
+                                                    <strong>Número de seguimiento:</strong>
+                                                    <%= pedido.numero_seguimiento %> <br>
+                                                        <strong>Fecha estimada de entrega:</strong>
+                                                        <%= pedido.fecha_entrega_estimada ? new
+                                                            Date(pedido.fecha_entrega_estimada).toLocaleDateString()
+                                                            : 'No disponible' %><br>
+                                                            <!-- <strong>Número de seguimiento:</strong>
+                                                            <%= pedido.numero_seguimiento || 'No asignado' %> -->
+                            </p>
+
+                            <hr>
+
+                            <!-- Pago -->
+                            <h5 class="card-title mb-3">💳 Detalles de pago</h5>
+                            <p>
+                                <strong>Método:</strong>
+                                <%= pedido.metodo_pago %><br>
+                                    <strong>Total pagado:</strong> $<%= Number(pedido.total || 0).toFixed(2) %><br>
+                                        <strong>Fecha de compra:</strong>
+                                        <%= pedido.fecha_pedido ? new Date(pedido.fecha_pedido).toLocaleDateString()
+                                            : 'No disponible' %>
+                            </p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <%- include ../partials/footer.ejs %>
+
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="/js/notificaciones.js"></script>
+</body>
+
+</html>

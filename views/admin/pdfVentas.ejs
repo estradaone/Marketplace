@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte de Ventas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 6px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>📄 Reporte de Ventas <%= filtro ? `(${filtro})` : '' %>
+    </h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Usuario</th>
+                <th>Email</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Subtotal</th>
+                <th>Estado</th>
+                <th>Método de Pago</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% ventas.forEach(v=> { %>
+                <tr>
+                    <td>
+                        <%= new Date(v.fecha_pedido).toLocaleDateString() %>
+                    </td>
+                    <td>
+                        <%= v.nombre_usuario %>
+                    </td>
+                    <td>
+                        <%= v.email %>
+                    </td>
+                    <td>
+                        <%= v.nombre_producto %>
+                    </td>
+                    <td>
+                        <%= v.cantidad %>
+                    </td>
+                    <td>$<%= parseFloat(v.precio_unitario).toFixed(2) %>
+                    </td>
+                    <td>$<%= parseFloat(v.subtotal).toFixed(2) %>
+                    </td>
+                    <td>
+                        <%= v.estado %>
+                    </td>
+                    <td>
+                        <%= v.metodo_pago %>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+
+    <h3 style="text-align:right; margin-top:20px;">
+        💰 Total: $<%= total %> MXN
+    </h3>
+
+</body>
+
+</html>

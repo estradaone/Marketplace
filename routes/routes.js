@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const UserController = require('../controllers/controllerUser');
-const ControllerUser = require('../controllers/userController');
+const UserModel = require('../models/modelUser');
 
 // Ruta para registrar un usuario
 router.post('/registrar', UserController.registrarUsuario);
-router.get('/usuariosExistentes', ControllerUser.getUsers);
-router.get('/buscarUsuarios', ControllerUser.searchUsers);
+router.get('/usuariosExistentes', UserController.listarUsuariosActivos);
 
 router.get('/loggin', UserController.showLogginPage);
 router.post('/loggin', UserController.authenticateUser);
@@ -85,6 +84,22 @@ router.get('/admin/usuarios/suspendidos', UserController.listarUsuariosSuspendid
 router.post('/admin/usuarios/suspender/:id_usuario', UserController.suspenderUsuario);
 router.post('/admin/usuarios/activar/:id_usuario', UserController.activarUsuario);
 router.delete('/admin/usuarios/eliminar/:id_usuario', UserController.eliminarUsuario);
+//Perfil usuario
+router.get('/perfil', UserController.verPerfilUsuario);
+router.post('/actualizar-perfil', UserController.actualizarPerfilUsuario);
+//Perfil admin
+router.get('/admin/perfil', UserController.verPerfilAdmin);
+router.post('/admin/actualizar-perfil', UserController.actualizarPerfilAdmin);
+//Ruta del historial admin
+router.get('/admin/historialVentas', UserController.verHistorialVentas);
+
+
+//Rutas del seguimiento de productos
+router.get('/pedidos', UserController.mostrarPedidos);
+router.get('/seguimiento', UserController.mostrarSeguimiento)
+
+//Ruta detalleProducto
+router.get('/producto/:id_producto', UserController.verDetalleProducto);
 
 router.get('/api/verificar-sesion', (req, res) => {
     if (req.session.user) {
@@ -137,6 +152,82 @@ router.get('/confirmacion', (req, res) => {
     res.render('confirmacion');
 });
 
+router.post('/api/finalizar-compra', async (req, res) => {
+    const carrito = req.session.carrito || [];
+    const usuario = req.session.user;
+
+    if (!usuario || carrito.length === 0) {
+        return res.status(400).json({ success: false, message: "Sesión inválida o carrito vacío." });
+    }
+    try {
+        await UserModel.finalizarCompra(usuario.id_usuario, carrito);
+        req.session.carrito = [];
+        res.json({ success: true });
+    } catch (error) {
+        console.error("Error al finalizar compra:", error.message);
+        res.status(500).json({ success: false, message: error.message });
+    }
+
+});
+
+router.get('/api/carrito/count', (req, res) => {
+    if (req.session.user && req.session.carrito) {
+        const total = req.session.carrito.reduce((acc, p) => acc + p.cantidad, 0);
+        res.json({ count: total });
+    } else {
+        res.json({ count: 0 });
+    }
+});
+
+//Ruta para posman 
+router.get('/api/producto/:id_producto', async (req, res) => {
+    try {
+        const { id_producto } = req.params;
+        const producto = await UserModel.obtenerProductosPorId(id_producto);
+        if (!producto) {
+            return res.status(404).json({ error: 'Producto no encontrado' });
+        }
+        res.json(producto);
+    } catch (error) {
+        console.error('Error al obtener el producto:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+//Busqueda de usuarios
+router.get('/buscarUsuarios', UserController.buscarUsuarios);
+//Busqueda tiempo real
+router.get('/buscar-usuarios', UserController.buscarUsuariosTiempoReal);
+// Búsqueda tradicional (renderiza vista)
+router.get('/buscar-productos', UserController.buscarProductos);
+// Búsqueda en tiempo real (responde JSON)
+router.get('/buscar-productos-tiempo-real', UserController.buscarProductosTiempoReal);
+//Ruta de direccion del cliente
+router.get('/nueva-direccion', UserController.mostrarFormularioNuevaDireccion);
+router.post('/nueva-direccion', UserController.guardarNuevaDireccion);
+router.get('/direcciones', UserController.mostrarTodasLasDirecciones);
+router.get('/editar-direccion/:id', UserController.mostrarFormularioEditarDireccion);
+router.post('/editar-direccion/:id', UserController.actualizarDireccion);
+
+// Ruta del detalle de la compra
+router.get('/ver-compra/:id', UserController.verCompra);
+
+//Ruta de enviar formulario de ayuda
+router.post('/enviar-mensaje', UserController.enviarMensaje);
+
+//Ruta de reordenar
+router.get('/reordenar/:id_pedido', UserController.reordenarPedido);
+
+//Ruta del editar el seguimiento del estado
+router.get('/admin/editarPedido/:id', UserController.formEditarPedido);
+router.post('/admin/editarPedido/:id', UserController.actualizarPedido);
+
+router.post('/cancelar-pedido/:id', UserController.cancelarPedido);
+router.get('/rembolso/:id', UserController.verReembolso);
+
+
+//Ruta para generar PDF
+router.get('/admin/historialVentas/pdf', UserController.generarPDFVentas);
 
 module.exports = router;
 // Rutas para la navegacion de categorias

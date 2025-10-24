@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Seguimiento de Productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="bg-light">
+
+    <% if (seguimiento.length === 0) { %>
+        <div class="alert alert-warning text-center mt-5">
+            No tienes productos en seguimiento aún.
+        </div>
+    <% } else { %>
+        <h2 class="text-center text-primary my-4">📦 Seguimiento de tu compra</h2>
+        <div class="container">
+            <% seguimiento.forEach(producto => { 
+                const fechaEntrega = new Date(producto.fecha_entrega_estimada);
+                const fechaPedido = new Date(producto.fecha_pedido);
+                const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+                const diaEntrega = fechaEntrega.getDate();
+                const mesEntrega = meses[fechaEntrega.getMonth()];
+                const diaPedido = fechaPedido.getDate();
+                const mesPedido = meses[fechaPedido.getMonth()];
+                const añoPedido = fechaPedido.getFullYear();
+            %>
+            <div class="card mb-4 shadow-sm border rounded-3">
+                <div class="row g-0">
+                    <!-- Imagen pequeña -->
+                    <div class="col-md-2 d-flex align-items-center justify-content-center p-2">
+                        <img src="<%= producto.imagen_url %>" class="img-fluid rounded border" style="max-height: 100px;" alt="<%= producto.nombre_producto %>">
+                    </div>
+
+                    <!-- Seguimiento -->
+                    <div class="col-md-5 p-3">
+                        <h5 class="fw-bold mb-2"><%= producto.nombre_producto %></h5>
+                        <p class="mb-1"><strong>Estado actual:</strong> 
+                            <span class="badge bg-<%= producto.estado === 'entregado' ? 'success' : producto.estado === 'enviado' ? 'info' : producto.estado === 'preparación' ? 'warning' : 'secondary' %> text-uppercase">
+                                <%= producto.estado %>
+                            </span>
+                        </p>
+                        <p class="mb-1"><strong>Entrega estimada:</strong> <%= diaEntrega %> de <%= mesEntrega %></p>
+                        <p class="mb-1"><strong>Centro de entrega:</strong> <%= producto.centro_entrega %></p>
+                        <p class="mb-1"><strong>Palabra clave:</strong> <span class="text-danger fw-bold"><%= producto.palabra_clave %></span></p>
+                    </div>
+
+                    <!-- Detalles de compra -->
+                    <div class="col-md-5 p-3">
+                        <p class="mb-1"><strong>Fecha del pedido:</strong> <%= diaPedido %> de <%= mesPedido %> de <%= añoPedido %></p>
+                        <p class="mb-1"><strong>Cantidad:</strong> <%= producto.cantidad %></p>
+                        <p class="mb-1"><strong>Precio unitario:</strong> $<%= producto.precio_unitario %> MXN</p>
+                        <p class="mb-1"><strong>Envío:</strong> <%= producto.envio_gratis ? 'Gratis' : '$' + producto.costo_envio %></p>
+                        <p class="mb-1"><strong>Total pagado:</strong> $<%= producto.total %> MXN</p>
+                        <p class="mb-1"><strong>Método de pago:</strong> <%= producto.metodo_pago %></p>
+                        <p class="mb-1"><strong>Dirección:</strong> <%= producto.direccion_entrega %></p>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    <% } %>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

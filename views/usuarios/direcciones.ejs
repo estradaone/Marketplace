@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Direcciones</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <!-- Navbar y alertas -->
+    <%- include ../partials/navbar.ejs %>
+        <%- include ../partials/alertas.ejs %>
+
+            <div class="container mt-5">
+                <h2 class="mb-4">Tus direcciones</h2>
+                <a href="/usuarios/nueva-direccion" class="btn btn-success mb-3">Agregar nueva dirección</a>
+
+                <% if (direcciones.length> 0) { %>
+                    <% direcciones.forEach(dir=> { %>
+                        <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <%= dir.direccion %>
+                                </h5>
+                                <p class="card-text">
+                                    <strong>Ciudad:</strong>
+                                    <%= dir.ciudad %> |
+                                        <strong>Municipio:</strong>
+                                        <%= dir.municipio %> |
+                                            <strong>Estado:</strong>
+                                            <%= dir.estado2 %> |
+                                                <strong>CP:</strong>
+                                                <%= dir.codigo_postal %>
+                                </p>
+                                <p class="card-text"><strong>Teléfono:</strong>
+                                    <%= dir.telefono %>
+                                </p>
+                                <a href="/usuarios/editar-direccion/<%= dir.id_direccion %>"
+                                    class="btn btn-outline-primary btn-sm">Editar</a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <a href="/usuarios/pagar" class="btn btn-primary mb-3">Continuar</a>
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <p class="text-muted">No tienes direcciones registradas.</p>
+                                <% } %>
+            </div>
+
+
+            <!-- Footer -->
+            <%- include ../partials/footer.ejs %>
+
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="/js/notificaciones.js"></script>
+</body>
+
+</html>

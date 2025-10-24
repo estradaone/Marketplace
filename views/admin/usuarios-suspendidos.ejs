@@ -15,6 +15,7 @@
 
         <div class="container mt-5">
             <h1>Usuarios Suspendidos</h1>
+            <p class="text-muted">Total suspendidos: <%= usuariosSuspendidos.length %></p>
             <a href="/usuarios/usuariosExistentes" class="btn btn-primary mb-3">Volver a Usuarios Registrados</a>
             <table class="table table-bordered">
                 <thead>
@@ -51,7 +52,8 @@
                                         style="display:inline;">
                                         <button type="submit" class="btn btn-primary">Activar</button>
                                     </form>
-                                    <form action="/usuarios/admin/usuarios/eliminar/<%= usuario.id_usuario %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirmarEliminacion();">
+                                    <form action="/usuarios/admin/usuarios/eliminar/<%= usuario.id_usuario %>?_method=DELETE" 
+                                        method="POST" style="display:inline;" onsubmit="return confirmarEliminacion();">
                                         <button type="submit" class="btn btn-danger">Eliminar</button>
                                     </form>
                                 </td>

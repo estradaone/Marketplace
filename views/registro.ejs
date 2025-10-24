@@ -9,53 +9,65 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
-<body>
-    <!-- Incluir la navegacion -->
-    <%- include partials/navbar.ejs %> <br>
-        <div class="body-form">
-            <div class="container-form mt-5">
-                <h1 class="text-center mb-4">Registro de Usuario</h1>
-                <form action="/usuarios/registrar" method="POST" class="mt-4">
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" class="form-control" required>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <!-- Navbar -->
+    <%- include partials/navbar.ejs %>
+
+        <!-- Formulario centrado -->
+        <div class="container my-5 flex-grow-1">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow border-0">
+                        <div class="row g-0">
+                            <!-- Columna izquierda -->
+                            <div class="col-md-6 bg-primary text-white d-flex flex-column justify-content-center p-4">
+                                <h2 class="mb-3">¡Bienvenido!</h2>
+                                <p>Regístrate para acceder a nuestra plataforma de artesanía local. Comparte, vende y
+                                    conecta con otros creadores.</p>
+                            </div>
+
+                            <!-- Columna derecha -->
+                            <div class="col-md-6 p-4">
+                                <h3 class="text-center mb-4">Registro de Usuario</h3>
+                                <form action="/usuarios/registrar" method="POST">
+                                    <div class="mb-3">
+                                        <label for="nombre" class="form-label">Nombre</label>
+                                        <input type="text" id="nombre" name="nombre" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="apellidos" class="form-label">Apellidos</label>
+                                        <input type="text" id="apellidos" name="apellidos" class="form-control"
+                                            required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Correo Electrónico</label>
+                                        <input type="email" id="email" name="email" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">Contraseña</label>
+                                        <input type="password" id="password" name="password" class="form-control"
+                                            required>
+                                    </div>
+                                    <div class="d-grid mb-3">
+                                        <button type="submit" class="btn btn-primary">Registrar</button>
+                                    </div>
+                                    <div class="text-center">
+                                        <a href="/usuarios/loggin" class="text-decoration-none">¿Ya tienes cuenta?
+                                            Inicia sesión</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="apellidos" class="form-label">Apellidos</label>
-                        <input type="text" id="apellidos" name="apellidos" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Correo Electrónico</label>
-                        <input type="email" id="email" name="email" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña</label>
-                        <input type="password" id="password" name="password" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="text" id="telefono" name="telefono" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="rol" class="form-label">Rol</label>
-                        <select id="rol" name="rol" class="form-select" required>
-                            <option value="administrador">administrador</option>
-                            <option value="vendedor">vendedor</option>
-                            <option value="usuario">usuario</option>
-                        </select>
-                    </div>
-                    <div class="d-grid gap-2" >
-                        <a class="lineaA" href="/usuarios/loggin">Inicia sesión</a>
-                    </div>
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Registrar</button> <br> <br>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-        <!-- Incluir el footer -->
+
+        <!-- Footer -->
         <%- include partials/footer.ejs %>
+
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 
 </html>

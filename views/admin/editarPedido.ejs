@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar pedido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="bg-light">
+    <%- include ../partials/navbar.ejs %>
+
+        <div class="container my-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0 rounded-4">
+                        <div class="card-body">
+                            <h4 class="card-title text-center text-primary mb-4">✏️ Editar Pedido #<%= pedido.id_pedido
+                                    %>
+                            </h4>
+
+                            <form method="post" action="/usuarios/admin/editarPedido/<%= pedido.id_pedido %>">
+                                <div class="mb-3">
+                                    <label for="estado" class="form-label">Estado del pedido</label>
+                                    <select name="estado" id="estado" class="form-select">
+                                        <option value="pendiente" <%=pedido.estado==='pendiente' ? 'selected' : '' %>
+                                            >Pendiente</option>
+                                        <option value="procesado" <%=pedido.estado==='procesado' ? 'selected' : '' %>
+                                            >Procesado</option>
+                                        <option value="enviado" <%=pedido.estado==='enviado' ? 'selected' : '' %>
+                                            >Enviado</option>
+                                        <option value="entregado" <%=pedido.estado==='entregado' ? 'selected' : '' %>
+                                            >Entregado</option>
+                                        <option value="cancelado" <%=pedido.estado==='cancelado' ? 'selected' : '' %>
+                                            >Cancelado</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="numero_seguimiento" class="form-label">Número de seguimiento</label>
+                                    <input type="text" name="numero_seguimiento" id="numero_seguimiento"
+                                        class="form-control" value="<%= pedido.numero_seguimiento %>" required>
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-success">✅ Actualizar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="/usuarios/admin/historialVentas" class="btn btn-outline-secondary btn-sm">← Volver al
+                            historial</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include ../partials/footer.ejs %>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="/js/notificaciones.js"></script>
+</body>
+
+</html>

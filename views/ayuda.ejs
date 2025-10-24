@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Te ayudamos?</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-light">
+    <%- include partials/navbar.ejs %>
+
+        <div class="container my-5">
+            <h2 class="text-center mb-4 text-primary">¿Te ayudamos?</h2>
+
+            <!-- Mensajes de estado -->
+            <% if (req.query.enviado) { %>
+                <div id="mensajeExito" class="alert alert-success text-center">
+                    ✅ Tu mensaje fue enviado correctamente.
+                </div>
+                <% } %>
+                    <% if (req.query.error) { %>
+                        <div id="mensajeError" class="alert alert-danger text-center">
+                            ❌ Hubo un error al enviar tu mensaje. Intenta de nuevo.
+                        </div>
+                        <% } %>
+
+                            <div class="row">
+                                <!-- Contacto + Mapa -->
+                                <div class="col-md-6 mb-4">
+                                    <h5 class="mb-3">📍 Detalles de contacto</h5>
+                                    <p>3 de Octumbre, 1ra Avenida Poniente Sur, Rayón, Chiapas</p>
+                                    <p>Pueblo de Rayón</p>
+                                    <p>C.P. 29740</p>
+                                    <p><i class="fas fa-phone me-2"></i> +52 9932802311</p>
+                                    <p><i class="fas fa-phone me-2"></i> +52 993 2907365</p>
+                                    <p><i class="fas fa-envelope me-2"></i> marketplacelocal@gmail.com</p>
+
+                                    <h6 class="mt-4">Síguenos</h6>
+                                    <div class="d-flex gap-3">
+                                        <a href="#" class="text-dark"><i class="fab fa-facebook fa-lg"></i></a>
+                                        <a href="#" class="text-dark"><i class="fab fa-twitter fa-lg"></i></a>
+                                        <a href="#" class="text-dark"><i class="fab fa-instagram fa-lg"></i></a>
+                                        <a href="#" class="text-dark"><i class="fab fa-youtube fa-lg"></i></a>
+                                        <a href="#" class="text-dark"><i class="fab fa-pinterest fa-lg"></i></a>
+                                        <a href="#" class="text-dark"><i class="fab fa-whatsapp fa-lg"></i></a>
+                                    </div>
+
+                                    <div class="mt-4" style="height: 250px;">
+                                        <div id="map" style="width: 100%; height: 100%;"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Formulario -->
+                                <div class="col-md-6 mb-4">
+                                    <h5 class="mb-3">📝 Envíanos un mensaje</h5>
+                                    <form action="/usuarios/enviar-mensaje" method="POST">
+                                        <div class="mb-3">
+                                            <label for="nombre" class="form-label">Nombre</label>
+                                            <input type="text" id="nombre" name="nombre" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Correo electrónico</label>
+                                            <input type="email" id="email" name="email" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="asunto" class="form-label">Asunto</label>
+                                            <input type="text" id="asunto" name="asunto" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="mensaje" class="form-label">Mensaje</label>
+                                            <textarea id="mensaje" name="mensaje" rows="5" class="form-control"
+                                                required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100">Enviar</button>
+                                    </form>
+                                </div>
+                            </div>
+        </div>
+
+        <%- include partials/footer.ejs %>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvUs3pD9H_LTCEW-Gt7pVc9Zs1UQFFGfw&callback=initMap" async defer></script>
+            <script src="/js/notificaciones.js"></script>
+            <script src="/js/googleMaps.js"></script>
+</body>
+
+</html>

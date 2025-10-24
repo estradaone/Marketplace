@@ -7,83 +7,100 @@
     <title>Página de Bienvenida</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
-</head>
+    </head>
 
-<body>
-    <!-- Incluir la navegacion -->
+    <body>
     <%- include partials/navbar.ejs %>
     <%- include partials/alertas.ejs %>
-
 
     <!-- Contenido principal -->
     <section class="container mt-4">
         <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="/img/img50.avif" class="d-block w-100" alt="Oferta 1">
+        <div class="carousel-inner">
+            <div class="carousel-item active"><img src="/img/img50.avif" class="d-block w-100" alt="Oferta 1"></div>
+            <div class="carousel-item"><img src="/img/img51.avif" class="d-block w-100" alt="Oferta 2"></div>
+            <div class="carousel-item"><img src="/img/img52.avif" class="d-block w-100" alt="Oferta 3"></div>
+            <div class="carousel-item"><img src="/img/img53.avif" class="d-block w-100" alt="Oferta 4"></div>
+            <div class="carousel-item"><img src="/img/img54.avif" class="d-block w-100" alt="Oferta 5"></div>
+            <div class="carousel-item"><img src="/img/img55.avif" class="d-block w-100" alt="Oferta 6"></div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+        </div>
+
+        <div class="container mt-5">
+        <h4 class="mb-4 text-center">Productos Destacados</h4>
+        <div class="row">
+            <% productos.forEach(producto => { %>
+            <div class="col-md-4 mb-4">
+                <div class="card tarjeta-relacionada shadow-sm h-100">
+                <a href="/usuarios/producto/<%= producto.id_producto %>">
+                    <img src="<%= producto.imagen_url %>" class="card-img-top img-fluid" alt="<%= producto.nombre_producto %>">
+                </a>
+                <div class="card-body text-center">
+                    <h6 class="card-title nombre-relacionado">
+                    <a href="/usuarios/producto/<%= producto.id_producto %>" class="text-decoration-none text-dark">
+                        <%= producto.nombre_producto %>
+                    </a>
+                    </h6>
+                    <p class="text-muted mb-1"><%= producto.nombre_categoria %></p>
+                    <p class="text-success"><strong>$<%= producto.precio %></strong></p>
+
+                    <% if (user && user.rol === 'administrador') { %>
+                    <div class="d-flex justify-content-center gap-2 mt-2">
+                        <a href="/usuarios/admin/productos/editar/<%= producto.id_producto %>" class="btn btn-success btn-sm">Editar</a>
+                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDelete<%= producto.id_producto %>">Eliminar</button>
+                    </div>
+                    <% } else { %>
+                    <button class="agregar-carrito" data-id="<%= producto.id_producto %>"
+                            data-nombre="<%= producto.nombre_producto %>"
+                            data-precio="<%= producto.precio %>"
+                            data-imagen="<%= producto.imagen_url %>">
+                        Añadir al carrito
+                    </button>
+                    <% } %>
                 </div>
-                <div class="carousel-item">
-                    <img src="/img/img51.avif" class="d-block w-100" alt="Oferta 2">
-                </div>
-                <div class="carousel-item">
-                    <img src="/img/img52.avif" class="d-block w-100" alt="Oferta 3">
-                </div>
-                <div class="carousel-item">
-                    <img src="/img/img53.avif" class="d-block w-100" alt="Oferta 3">
-                </div>
-                <div class="carousel-item">
-                    <img src="/img/img54.avif" class="d-block w-100" alt="Oferta 3">
-                </div>
-                <div class="carousel-item">
-                    <img src="/img/img55.avif" class="d-block w-100" alt="Oferta 3">
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Anterior</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Siguiente</span>
-            </button>
-        </div>
-        <div class="container mt-5">
-            <h2 class="text-center mb-4">Productos Destacados</h2>
-            <div class="row">
-                <!-- <% if (Array.isArray(productos) && productos.length > 0) { %> -->
-                    <% productos.forEach(producto => { %>
-                        <div class="col-md-3 mb-4">
-                            <div class="card">
-                                <img src="<%= producto.imagen_url %>" class="card-img-top img-fluid" alt="<%= producto.nombre_producto %>">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title"><%= producto.nombre_producto %></h5>
-                                    <p class="card-text text-success"><strong>$<%= producto.precio %></strong></p>
-                                    <button class="agregar-carrito"
-                                        data-id="<%= producto.id_producto %>"
-                                        data-nombre="<%= producto.nombre_producto %>"
-                                        data-precio="<%= producto.precio %>"
-                                        data-imagen="<%= producto.imagen_url %>">
-                                        🛒
-                                    </button>
-                                    <a href="/usuarios/tienda" class="btn btn-success">Ver más</a>
-                                </div>
-                            </div>
-                        </div>
-                    <% }); %>
-                <% } else { %>
-                    <p class="text-center">No hay productos disponibles en este momento.</p>
-                <% } %>
-        </div>
-</div>
 
+            <!-- Modal de confirmación de eliminación -->
+            <% if (user && user.rol === 'administrador') { %>
+                <div class="modal fade" id="confirmDelete<%= producto.id_producto %>" tabindex="-1" aria-labelledby="confirmDeleteLabel<%= producto.id_producto %>" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title" id="confirmDeleteLabel<%= producto.id_producto %>">¿Eliminar producto?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Estás seguro de que deseas eliminar <strong><%= producto.nombre_producto %></strong>?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="/usuarios/admin/productos/eliminar/<%= producto.id_producto %>" class="btn btn-danger">Eliminar</a>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            <% } %>
+            <% }) %>
+        </div>
+        </div>
     </section>
-    <!-- Incluir el footer -->
-    <%- include partials/footer.ejs %>
 
+    <%- include partials/footer.ejs %>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/carrito.js"></script>
     <script src="/js/notificaciones.js"></script>
+    <script src="/js/mensajePush.js"></script>
+    <script src="/js/serviceWorker.js"></script>
 </body>
 
 </html>

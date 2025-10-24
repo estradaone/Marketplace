@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de ventas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="bg-light">
+
+    <%- include ../partials/navbar.ejs %>
+
+        <div class="container my-5">
+            <h2 class="text-center text-danger mb-4">📊 Historial de Ventas</h2>
+
+            <% if (filtro) { %>
+                <h5 class="text-muted">Filtrando por:
+                    <%= filtro==='dia' ? 'Hoy' : filtro==='semana' ? 'Esta semana' : filtro==='mes' ? 'Este mes' :
+                        filtro==='anio' ? 'Este año' : '—' %>
+                </h5>
+                <% } %>
+
+                    <form method="get" action="/usuarios/admin/historialVentas" class="mb-4 d-flex justify-content-end">
+                        <select name="filtro" class="form-select w-auto me-2">
+                            <option value="">- Ver todo -</option>
+                            <option value="dia" <%=filtro==='dia' ? 'selected' : '' %>>Hoy</option>
+                            <option value="semana" <%=filtro==='semana' ? 'selected' : '' %>>Esta semana</option>
+                            <option value="mes" <%=filtro==='mes' ? 'selected' : '' %>>Este mes</option>
+                            <option value="anio" <%=filtro==='anio' ? 'selected' : '' %>>Este año</option>
+                        </select>
+                        <button type="submit" class="btn btn-dark">Filtrar</button>
+                    </form>
+                    <form method="get" action="/usuarios/admin/historialVentas/pdf"
+                        class="mb-4 d-flex justify-content-end">
+                        <input type="hidden" name="filtro" value="<%= filtro || '' %>">
+                        <button type="submit" class="btn btn-outline-danger"> Generar PDF</button>
+                    </form>
+
+                    <table class="table table-bordered table-hover shadow-sm">
+                        <thead class="table-dark text-center">
+                            <tr>
+                                <th>ID Pedido</th>
+                                <th>Fecha</th>
+                                <th>Usuario</th>
+                                <th>Email</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio Unitario</th>
+                                <th>Subtotal</th>
+                                <th>Método de Pago</th>
+                                <th>Estado</th>
+                                <th>Seguimiento</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% historial.forEach(venta=> { %>
+                                <tr>
+                                    <td>
+                                        <%= venta.id_pedido %>
+                                    </td>
+                                    <td>
+                                        <%= venta.fecha_pedido ? new Date(venta.fecha_pedido).toLocaleDateString() : '—'
+                                            %>
+                                    </td>
+                                    <td>
+                                        <%= venta.nombre_usuario || '—' %>
+                                    </td>
+                                    <td>
+                                        <%= venta.email || '—' %>
+                                    </td>
+                                    <td>
+                                        <%= venta.nombre_producto || 'Producto eliminado' %>
+                                    </td>
+                                    <td>
+                                        <%= venta.cantidad ?? '—' %>
+                                    </td>
+                                    <td>
+                                        <% if (!isNaN(parseFloat(venta.precio_unitario))) { %>
+                                            $<%= parseFloat(venta.precio_unitario).toFixed(2) %>
+                                                <% } else { %>
+                                                    <span class="text-muted">—</span>
+                                                    <% } %>
+                                    </td>
+                                    <td>
+                                        <% if (!isNaN(parseFloat(venta.subtotal))) { %>
+                                            $<%= parseFloat(venta.subtotal).toFixed(2) %>
+                                                <% } else { %>
+                                                    <span class="text-muted">—</span>
+                                                    <% } %>
+                                    </td>
+                                    <td>
+                                        <%= venta.metodo_pago || '—' %>
+                                    </td>
+                                    <td>
+                                        <%= venta.estado || '—' %>
+                                    </td>
+                                    <td>
+                                        <%= venta.numero_seguimiento || '—' %>
+                                    </td>
+                                    <td>
+                                        <a href="/usuarios/admin/editarPedido/<%= venta.id_pedido %>"
+                                            class="btn btn-sm btn-warning">Editar</a>
+                                    </td>
+
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                    <div class="text-end mt-3">
+                        <h5 class="text-success">💰 Total de ventas <%= filtro ? `(${filtro})` : '' %>:
+                                $<%= parseFloat(totalVentas).toFixed(2) %> MXN
+                        </h5>
+                    </div>
+
+
+        </div>
+
+        <%- include ../partials/footer.ejs %>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="/js/notificaciones.js"></script>
+</body>
+
+</html>

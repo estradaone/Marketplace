@@ -1,38 +1,35 @@
 /* Estilos personalizados para la página de bienvenida */
-body, html {
+body,
+html {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
+
 .container {
-    flex: 1; /* Esto hace que el contenido empuje el footer */
+    flex: 1;
+    /* margin-: 40px; */
 }
 
 .navbar-brand {
     font-weight: bold;
 }
+
+.bg-color {
+    background-color: #4B7FBF;
+}
+
 .lineaA {
     text-decoration: none;
     text-align: center;
     padding: 5px;
 }
+
 .carousel-inner img {
     height: 485px;
     object-fit: cover;
 }
-footer {
-    text-align: center;
-    font-size: 1em;
-    bottom: 0;
-    width: 100%;
-    padding: 20px;
-    height: 60px;
-    overflow: hidden;
-}
-footer>p {
-    margin-top: calc(20px - 0.5em);
-    height: auto;
-}
+
 /* Estilo del formulario*/
 .body-form {
     background-color: #f8f9fa;
@@ -41,6 +38,7 @@ footer>p {
     align-items: center;
     height: 100vh;
 }
+
 .container-form {
     max-width: 400px;
     background-color: #fff;
@@ -48,20 +46,25 @@ footer>p {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 30px;
 }
+
 .btn-primary {
     background-color: #007bff;
     border-color: #007bff;
 }
+
 .btn-primary:hover {
     background-color: #0056b3;
     border-color: #004085;
 }
+
 .form-control {
     border-radius: 5px;
 }
+
 .form-label {
     font-weight: bold;
 }
+
 /* Estilos del loggin*/
 .body-form2 {
     background-color: #f8f9fa;
@@ -78,27 +81,77 @@ footer>p {
 }
 
 .alert-danger {
-    margin-bottom: 20px; /* Espaciado inferior para el mensaje de error */
+    margin-bottom: 20px;
+    /* Espaciado inferior para el mensaje de error */
 }
 
 h1.text-center.mb-4 {
-    margin-top: 20px; /* Espaciado superior para el título */
+    margin-top: 20px;
+    /* Espaciado superior para el título */
 }
 
-/* Navegacion*/
-.bg-crema {
-    background-color: #9eadb2;
-    /* background-color: #2392cd; */
-    /* background-color: #23cdb4; */
+/* Estilo de la navegacoin */
+/* Fondo gris */
+.bg-gray {
+    background-color: #5f5f5f;
 }
 
 .logo {
-    height: 70px;
-    width: 170%;
-    color: #F6CF73;
-    margin-bottom: 9px;
+    display: block;
+    margin: 0 auto;
+    max-width: 240px;
+    width: 80%;
+    height: auto;
+    object-fit: contain;
+    background-color: transparent;
 }
 
+
+
+/* Íconos */
+.nav-link i {
+    font-size: 1.3rem;
+}
+
+/* Modal búsqueda */
+#searchModal .modal-content {
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+#searchModal input {
+    border-radius: 30px 0 0 30px;
+}
+
+#searchModal button {
+    border-radius: 0 30px 30px 0;
+}
+
+#carritoContador {
+    font-size: 0.75rem;
+    padding: 4px 6px;
+    animation: none;
+}
+
+.pop {
+    animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+
+/* Mensaje de error  */
 .alert-danger {
     background-color: #f8d7da;
     color: #721c24;
@@ -107,13 +160,22 @@ h1.text-center.mb-4 {
     padding: 15px;
     margin-top: 10px;
     text-align: center;
-    animation: fadeOut 2s forwards; /* Duración del mensaje de 3 segundos */
+    animation: fadeOut 2s forwards;
+    /* Duración del mensaje de 3 segundos */
 }
 
 @keyframes fadeOut {
-    0% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { opacity: 0; }
+    0% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 /*Estilos para las tarjetas de los productos */
@@ -171,6 +233,7 @@ h1.text-center.mb-4 {
         opacity: 0;
         transform: scale(0.95);
     }
+
     to {
         opacity: 1;
         transform: scale(1);
@@ -212,13 +275,6 @@ aside {
     padding: 15px;
 }
 
-/* Pie de página */
-footer {
-    padding: 10px;
-    background-color: #f8f9fa;
-    border-top: 1px solid #ddd;
-}
-
 /* Notificaciones */
 .mensaje-notificacion {
     position: fixed;
@@ -234,13 +290,127 @@ footer {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
     z-index: 9999;
 }
+
 .mensaje-error {
     background-color: #dc3545 !important;
 }
+
 .fade-out {
     animation: fadeOut 5s forwards;
 }
+
 @keyframes fadeOut {
-    0% { opacity: 1;}
-    100% {opacity: 0;}
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
+
+/* Productos destacados */
+.tarjeta-horizontal {
+    background-color: #fdf6f0;
+    border: 1 px solid #e0cfc2;
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    transition: background-clor 0.3s ease;
+}
+
+.tarjeta-horizontal:hover {
+    background-color: #fbe9dc;
+}
+
+.img-miniatura {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    border: 1px solid #d8bfae;
+}
+
+.nombre-destacado {
+    font-family: 'Georgia', serif;
+    font-size: 0.95rem;
+    color: #5a3e2b;
+}
+
+/* Productos relacionados */
+.tarjeta-relacionada {
+    background-color: #fdf6f0;
+    border: 1px solid #e0cfc2;
+    border-radius: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.tarjeta-relacionada:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.nombre-relacionado {
+    font-family: 'Georgia', serif;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* Estilo boton del carrito  */
+.agregar-carrito {
+    background-color: #f57c00;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.agregar-carrito:hover {
+    background-color: #e65100;
+    cursor: pointer;
+}
+
+/* Footer  */
+footer {
+    font-size: 0.95em;
+    background-color: #9caee5;
+    border-top: 1px solid #dddddd;
+    padding: 20px 0;
+    width: 100%;
+    margin-top: auto;
+}
+
+footer h5 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+footer a i {
+    font-size: 1.2em;
+}
+
+footer ul {
+    padding-left: 0;
+}
+
+footer ul li {
+    margin-bottom: 5px;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Estilo para el navbar  */
+#navbarPrincipal {
+    transition: top 0.3s ease-in-out;
+}
+
+.admin-tools img:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out;
+}
+
